@@ -1,0 +1,43 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<input type="text" id="val" value="">
+<input type="submit" onclick=Store() value="存储">
+<input type="submit" onclick=showStorage() value="显示">
+
+<script>
+    function Store(){
+        if(window.localStorage){
+        var val = document.getElementById("val");
+        //localStorage.a = 3;
+        //localStorage["a"] = "adf";
+        localStorage.setItem("b",encodeHtml(val.value));
+        //var a1 = localStorage["a"];
+        //var a2 = localStorage.a;
+        var b = localStorage.getItem("b");
+        // localStorage.removeItem("c");
+        //localStorage.clear();
+        }else{
+            alert('This browser does NOT support localStorage');
+        }
+    }
+
+    var storage = window.localStorage;
+
+    function showStorage(){
+        for(var i=0;i<storage.length;i++){
+            document.write(storage.key(i)+ " : " + storage.getItem(storage.key(i)) + "<br>");
+        }
+    }
+
+  var REGX_HTML_ENCODE = /"|&|'|<|>|[\x00-\x20]|[\x7F-\xFF]|[\u0100-\u2700]/g;
+  function encodeHtml(s){
+    return (typeof s != "string") ? s :
+    s.replace(REGX_HTML_ENCODE,
+              function($0){
+              var c = $0.charCodeAt(0), r = ["&#"];
+              c = (c == 0x20) ? 0xA0 : c;
+              r.push(c); r.push(";");
+              return r.join("");
+              });
+}
+
+</script>
